@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+
 plugins {
 	id("org.springframework.boot") version "2.7.6"
 	id("io.spring.dependency-management") version "1.1.0"
@@ -10,7 +11,6 @@ plugins {
 
 group = "org.bernshtam"
 version = "0.0.1"
-java.sourceCompatibility = JavaVersion.VERSION_11
 
 
 
