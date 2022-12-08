@@ -1,9 +1,6 @@
 package org.bernshtam.throughput
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.async
-import kotlinx.coroutines.newFixedThreadPoolContext
+import kotlinx.coroutines.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -21,8 +18,6 @@ class CoroutinesController {
 
     @Autowired
     private lateinit var rest: KtorCallExternalAPIService
-    private val fixedThreadPoolContext = newFixedThreadPoolContext(3, "background")
-    private val scope = CoroutineScope(fixedThreadPoolContext + SupervisorJob())
     private val r = Random(1000)
 
     @GetMapping("/coroutines")
@@ -33,11 +28,11 @@ class CoroutinesController {
         val toFind = if (r.nextBoolean())
             s + rest.callExternalRest(s)
         else s
-        val find = scope.async(fixedThreadPoolContext) {
-            println("coroutines async ${Thread.currentThread().name}")
-            repo.find(toFind)
+        val find  = withContext(Dispatchers.IO) {
+                println("coroutines async ${Thread.currentThread().name}")
+                repo.find(toFind)
         }
-        return find.await().toString()
+        return find.toString()
     }
 }
 
