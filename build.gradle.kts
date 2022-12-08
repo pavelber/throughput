@@ -12,7 +12,7 @@ group = "org.bernshtam"
 version = "0.0.1"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
-
+val ktor_version= "2.2.1"
 
 repositories {
 	mavenCentral()
@@ -29,9 +29,12 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
 	runtimeOnly("com.mysql:mysql-connector-j")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
+	implementation("io.ktor:ktor-client-core:$ktor_version")
+	implementation("io.ktor:ktor-client-cio:$ktor_version")
 }
 
 tasks.withType<KotlinCompile> {
